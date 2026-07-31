@@ -380,7 +380,7 @@ export default function ProfileScreen({ navigation }) {
                 bio: bio,
                 instagram: instagram,
                 linkedin: linkedin,
-                year: parseInt(year),
+                year: parseInt(year, 10),
                 branch: finalBranch,
             };
 
