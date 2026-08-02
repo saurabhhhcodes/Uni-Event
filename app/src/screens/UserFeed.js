@@ -127,7 +127,7 @@ const UserFeedStickyHeader = ({
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.filterContent}
             >
-                {FILTERS.map(f => {
+                {(FILTERS ?? []).map(f => {
                     const isActive = activeFilter === f;
                     return (
                         <TouchableOpacity
