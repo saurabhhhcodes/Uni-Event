@@ -48,7 +48,7 @@ async function runMigrations() {
     const files = fs
         .readdirSync(__dirname)
         .filter(f => f.endsWith('.ts') && f !== 'migrate.ts')
-        .sort();
+        .sort((a, b) => a - b);
 
     if (files.length === 0) {
         console.log('No migrations found.');
