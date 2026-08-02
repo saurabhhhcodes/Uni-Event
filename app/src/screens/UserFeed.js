@@ -95,7 +95,7 @@ const UserFeedStickyHeader = ({
                     showsHorizontalScrollIndicator={false}
                     style={styles.historyScroll}
                 >
-                    {searchHistory.map(qh => (
+                    {(searchHistory ?? []).map(qh => (
                         <TouchableOpacity
                             key={qh}
                             style={styles.historyChip}

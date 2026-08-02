@@ -185,7 +185,7 @@ const ProfileBadgeShelf = ({
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.profileBadgeShelfList}
         >
-            {badges.map(badge => {
+            {(badges ?? []).map(badge => {
                 const isSelected = badge.id === selectedBadgeId;
 
                 return (
