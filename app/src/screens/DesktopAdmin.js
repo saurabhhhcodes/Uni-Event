@@ -209,7 +209,7 @@ export default function DesktopAdmin() {
                                 <Text style={styles.cell}>Status</Text>
                                 <Text style={styles.cell}>Action</Text>
                             </View>
-                            {clubs.map(club => (
+                            {(clubs ?? []).map(club => (
                                 <View key={club.id} style={styles.row}>
                                     <Text style={styles.cell}>{club.name}</Text>
                                     <Text style={styles.cell}>{club.ownerUserId}</Text>

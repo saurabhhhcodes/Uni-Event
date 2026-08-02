@@ -517,7 +517,7 @@ function KanbanColumn({ column, tasks, onMoveTask, onDeleteTask }: ReadonlyKanba
                         </Text>
                     </View>
                 ) : (
-                    tasks.map(task => (
+                    (tasks ?? []).map(task => (
                         <TaskCard
                             key={task.id}
                             task={task}
