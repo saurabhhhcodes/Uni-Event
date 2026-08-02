@@ -197,7 +197,7 @@ export default function DesktopAdmin() {
             {/* Main Content */}
             <View style={styles.main}>
                 <Text style={styles.header}>
-                    {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
+                    {activeTab[0].toUpperCase() + activeTab.slice(1)} Management
                 </Text>
 
                 <ScrollView style={styles.contentArea}>

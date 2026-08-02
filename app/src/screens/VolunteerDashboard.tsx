@@ -443,7 +443,7 @@ function TaskCard({ task, onMoveTask, onDeleteTask, columnColor }: ReadonlyTaskC
                             style={[styles.assigneeAvatar, { backgroundColor: columnColor + '30' }]}
                         >
                             <Text style={[styles.assigneeInitial, { color: columnColor }]}>
-                                {task.assignee.charAt(0).toUpperCase()}
+                                {task.assignee[0].toUpperCase()}
                             </Text>
                         </View>
                     </View>
@@ -689,7 +689,7 @@ function AddTaskModal({ visible, onClose, onAdd }: ReadonlyAddTaskModalProps) {
                                             },
                                         ]}
                                     >
-                                        {p.charAt(0).toUpperCase() + p.slice(1)}
+                                        {p[0].toUpperCase() + p.slice(1)}
                                     </Text>
                                 </TouchableOpacity>
                             );
