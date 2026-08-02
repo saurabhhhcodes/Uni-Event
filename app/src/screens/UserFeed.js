@@ -528,7 +528,7 @@ export default function UserFeed() {
 
                 // Check Year
                 const targetYears = e.target?.years || [];
-                const userYear = parseInt(userData.year || 0);
+                const userYear = parseInt(userData.year || 0, 10);
                 // If targetYears is empty/undefined, assume open to all.
                 const yearMatch = targetYears.length === 0 || targetYears.includes(userYear);
 
