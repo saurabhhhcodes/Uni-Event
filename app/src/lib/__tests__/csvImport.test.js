@@ -1,4 +1,4 @@
-import { parseCsv, parseAttendeeRows, participantIdForEmail } from './csvImport';
+import { parseCsv, parseAttendeeRows, participantIdForEmail } from '../csvImport';
 
 describe('parseCsv', () => {
     it('parses simple rows', () => {
