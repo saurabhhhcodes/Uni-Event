@@ -14,6 +14,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types';
+import EmptyState from '../components/EmptyState';
 import {
     Animated,
     ActivityIndicator,
@@ -775,19 +776,20 @@ export default function UserFeed() {
                     onScrollEndDrag={handleScrollEndDrag}
                     contentContainerStyle={{ paddingBottom: 100 }}
                     ListEmptyComponent={
-                        <View style={styles.emptyContainer}>
-                            <Ionicons
-                                name="search-outline"
-                                size={64}
-                                color={theme.colors.textSecondary}
-                                style={{ opacity: 0.5 }}
-                            />
-                            <Text style={[styles.emptyText, { color: theme.colors.textSecondary }]}>
-                                {searchQuery
+                        <EmptyState
+                            icon={searchQuery ? 'search-outline' : 'calendar-outline'}
+                            title={
+                                searchQuery
                                     ? `No events found for "${searchQuery}"`
-                                    : 'No events found.'}
-                            </Text>
-                        </View>
+                                    : 'No events yet!'
+                            }
+                            subtitle={
+                                searchQuery
+                                    ? 'Try a different search term or check your filters.'
+                                    : 'Check back soon for new events near you.'
+                            }
+                            theme={theme}
+                        />
                     }
                     ListFooterComponent={
                         hasMore && events.length > 0 ? (
@@ -917,8 +919,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         opacity: 0.9,
     },
-    emptyContainer: { alignItems: 'center', marginTop: 50, padding: 20 },
-    emptyText: { marginTop: 10, fontSize: 16 },
     loadMoreBtn: {
         backgroundColor: '#6C63FF',
         paddingVertical: 14,
