@@ -46,6 +46,7 @@
 - [Features](#-features)
 - [Tech Stack](#️-tech-stack)
 - [Project Structure](#-project-structure)
+- [Demo & Screenshots](#-demo--screenshots)
 - [Quick Start](#-quick-start)
 - [Configuration](#configuration)
 - [Running Locally](#-running-locally)
@@ -55,6 +56,7 @@
 - [Contributors](#-contributors)
 - [License](#-license)
 - [Acknowledgments](#-acknowledgments)
+- [Support](#-support)
 
 ---
  
@@ -211,13 +213,15 @@ Uni-Event/
 
 ---
 
-## 💻 Windows
+## 🎬 Demo & Screenshots
 
-### 🎥 Demo Video (Web Preview)
+### Web Preview
+
+#### 🎥 Demo Video
 
 [Watch Demo Web]( https://github.com/user-attachments/assets/f2a92a2a-0c39-4913-9695-fdae9a50092f)
 
-### 📸 Screenshots (Web Preview)
+#### 📸 Screenshots
 
 <img src="Demo_Home_Screen.png" alt="Demo_Home_Screen">
 
@@ -227,13 +231,13 @@ Uni-Event/
 
 <img src="Demo_Profile_Screen.png" alt="Demo__Profile_Screen">
 
-## 📱 Mobile
+## 📱 Mobile (App Preview)
 
-### 🎥 Demo Video (App Preview)
+### 🎥 Demo Video
 
 [Watch Demo App](https://github.com/user-attachments/assets/b71e2064-6f9e-4b64-abab-29e628f5387f)
 
-### 📸 Screenshots (App Preview)
+### 📸 Screenshots
 
 <img src="Auth_Mobile.png" alt="Demo_Photo_Mobile">
 
@@ -247,9 +251,9 @@ Make sure you have the following installed before proceeding:
 
 - **Node.js** v18+ → [Download](https://nodejs.org/)
 - **npm** or **yarn**
-- **Expo CLI**: `npm install -g expo-cli`
+- **Expo Go / Expo CLI**: run commands via `npx expo` (global `expo-cli` is deprecated)
 - **Firebase CLI**: `npm install -g firebase-tools`
-- **Java 11+** (required for Firebase Emulators)
+- **Java 11+** (required for Firebase Emulators; 17 LTS recommended)
 
 ### 1. Clone the Repository
 
@@ -261,6 +265,9 @@ cd Uni-Event
 ### 2. Install Dependencies
 
 ```bash
+# Install root dependencies (git hooks + security-rule test runner)
+npm install
+
 # Install frontend dependencies
 cd app
 npm install
@@ -321,26 +328,23 @@ Then press the appropriate key in the terminal:
 | `w` | Web (browser) |
 | `a` | Android (emulator or device) |
 | `i` | iOS (simulator) |
- 
-
-**Run Firestore security rule tests**:
-```bash
-npm run test:rules
-```
 
 ---
- 
+
 ## 🧪 Testing
- 
+
 ### Run Firestore Security Rule Tests
- 
+
+From the **repository root** (not `app/`):
+
 ```bash
-cd app
 npm run test:rules
 ```
- 
+
+> Requires Java and the Firebase CLI (see [Prerequisites](#-quick-start)) — spins up a local Firestore emulator.
+
 ### Run Unit Tests
- 
+
 ```bash
 cd cloud-functions
 npm test
