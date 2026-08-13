@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
@@ -34,6 +34,7 @@ export default function EventRegistrationFormScreen({ navigation, route }) {
     const [loading, setLoading] = useState(false);
     const [datePickers, setDatePickers] = useState({});
     const [showConfetti, setShowConfetti] = useState(false);
+    const submittingRef = useRef(false);
     const { width: screenWidth } = Dimensions.get('window');
 
     useEffect(() => {
@@ -59,7 +60,11 @@ export default function EventRegistrationFormScreen({ navigation, route }) {
     };
 
     const handleSubmit = async () => {
-        if (loading) return;
+        if (loading || submittingRef.current) return;
+
+        // Guard against rapid double-taps: state updates are async, so two
+        // taps in the same tick can both pass the `loading` check.
+        submittingRef.current = true;
 
         if (!validate()) return;
 
@@ -106,6 +111,10 @@ export default function EventRegistrationFormScreen({ navigation, route }) {
             Alert.alert('Error', e.message || 'Failed to register.');
         } finally {
             setLoading(false);
+            // Allow a failed attempt to be retried shortly after.
+            setTimeout(() => {
+                submittingRef.current = false;
+            }, 500);
         }
     };
 

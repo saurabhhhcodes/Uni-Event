@@ -3,7 +3,7 @@ import { httpsCallable } from 'firebase/functions';
 import { getDoc, doc } from 'firebase/firestore';
 import { db, functions } from '../lib/firebaseConfig';
 import { getEarlyBirdInfo } from '../lib/earlyBird';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
@@ -28,6 +28,7 @@ export default function PaymentScreen({ route, navigation }) {
     const { theme } = useTheme();
 
     const [loading, setLoading] = useState(false);
+    const submittingRef = useRef(false);
     const [selectedMethod, setSelectedMethod] = useState(null);
     const [utr, setUtr] = useState('');
     const [showUtrInput, setShowUtrInput] = useState(false);
@@ -117,6 +118,8 @@ export default function PaymentScreen({ route, navigation }) {
     };
 
     const processTicketBooking = transactionId => {
+        if (submittingRef.current) return;
+        submittingRef.current = true;
         setLoading(true);
 
         // Simulate Validation Delay
@@ -152,6 +155,7 @@ export default function PaymentScreen({ route, navigation }) {
             } catch (error) {
                 console.error('Payment Error:', error);
                 setLoading(false);
+                submittingRef.current = false;
                 Alert.alert('Payment Failed', 'Something went wrong. Please try again.');
             }
         }, 2000);

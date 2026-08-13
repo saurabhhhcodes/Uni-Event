@@ -216,7 +216,18 @@ const processRegistrationTransaction = async (
     transaction.set(participatingRef, participatingPayload);
 
     if (!isPaid || responses) {
-        const registrationRef = db.collection('registrations').doc();
+        // Deterministic doc id (eventId_userId) so a second registration for
+        // the same event+user writes to the same document, and the
+        // existence guard below rejects duplicates instead of creating a
+        // second registration record that inflates attendee counts.
+        const registrationRef = db.collection('registrations').doc(`${eventId}_${uid}`);
+        const registrationSnap = await transaction.get(registrationRef);
+        if (registrationSnap.exists) {
+            throw new functions.https.HttpsError(
+                'already-exists',
+                'You are already registered for this event.',
+            );
+        }
         const regPayload: any = {
             eventId: eventId,
             eventId_userId: `${eventId}_${uid}`,

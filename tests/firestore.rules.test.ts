@@ -349,6 +349,37 @@ describe('Firestore Security Rules', () => {
         );
     });
 
+    // Regression for #735: a second full RSVP write for the same event+user
+    // (which would inflate attendee counts) must be rejected. The existing
+    // participant document can only be updated via the restricted status
+    // keys, so a full re-registration payload is denied.
+    test('Duplicate RSVP re-registration write -> denied (Issue #735)', async () => {
+        await seedDocument('events/event1/participants/student1', {
+            userId: 'student1',
+            status: 'attending',
+        });
+        await assertFails(
+            setDoc(doc(getFirestoreContext('student1'), 'events/event1/participants/student1'), {
+                userId: 'student1',
+                name: 'Student One',
+                email: 'student1@example.com',
+                joinedAt: new Date().toISOString(),
+                status: 'attending',
+            }),
+        );
+    });
+
+    test('Re-registration via status-only update -> allowed (Issue #735)', async () => {
+        await seedDocument('events/event1/participants/student1', { status: 'cancelled' });
+        await assertSucceeds(
+            setDoc(
+                doc(getFirestoreContext('student1'), 'events/event1/participants/student1'),
+                { status: 'attending' },
+                { merge: true },
+            ),
+        );
+    });
+
     // ---------------- EVENT CHECK-INS ----------------
 
     test('Club user writes event check-in -> allowed', async () => {
