@@ -23,10 +23,7 @@ export const retryDeadLetterEmail = functions.https.onCall(async (data, context)
 
     const { entryId } = data ?? {};
     if (!entryId || typeof entryId !== 'string') {
-        throw new functions.https.HttpsError(
-            'invalid-argument',
-            'entryId is required.',
-        );
+        throw new functions.https.HttpsError('invalid-argument', 'entryId is required.');
     }
 
     const db = admin.firestore();

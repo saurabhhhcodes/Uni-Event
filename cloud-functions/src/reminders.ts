@@ -59,9 +59,7 @@ async function sendReminderEmails(
     const title = event.title || 'Upcoming event';
     const startAt = formatEventDate(event.startAt);
     const location =
-        event.eventMode === 'online'
-            ? event.meetLink || 'online'
-            : event.location || 'TBD';
+        event.eventMode === 'online' ? event.meetLink || 'online' : event.location || 'TBD';
 
     const participants = await getParticipantContacts(db, eventId);
     const emails = [

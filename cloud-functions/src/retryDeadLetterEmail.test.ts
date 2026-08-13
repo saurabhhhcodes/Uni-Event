@@ -62,10 +62,11 @@ describe('retryDeadLetterEmail', () => {
 
     it('re-sends a queued entry and marks it delivered', async () => {
         const admin = require('firebase-admin');
-        admin.firestore().collection('email_dead_letter_queue') // init chain
+        admin
+            .firestore()
+            .collection('email_dead_letter_queue') // init chain
             .doc('dlq-1')
-            .get
-            .mockResolvedValue({
+            .get.mockResolvedValue({
                 exists: true,
                 data: () => ({
                     to: 'user@example.com',
@@ -77,16 +78,19 @@ describe('retryDeadLetterEmail', () => {
                     status: 'queued',
                 }),
             });
-        admin.firestore().collection('email_dead_letter_queue').doc('dlq-1').update.mockResolvedValue({});
+        admin
+            .firestore()
+            .collection('email_dead_letter_queue')
+            .doc('dlq-1')
+            .update.mockResolvedValue({});
         (sendEmailWithRetry as unknown as jest.Mock).mockResolvedValue({
             success: true,
             messageId: 'msg-retry',
         });
 
-        const result = await wrapped(
-            { entryId: 'dlq-1' },
-            { auth: { uid: 'a1', token: { admin: true } } } as any,
-        );
+        const result = await wrapped({ entryId: 'dlq-1' }, {
+            auth: { uid: 'a1', token: { admin: true } },
+        } as any);
 
         expect(result).toEqual({ success: true, entryId: 'dlq-1', retryCount: 2 });
         expect(sendEmailWithRetry).toHaveBeenCalledWith(

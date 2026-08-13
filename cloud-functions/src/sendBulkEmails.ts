@@ -196,8 +196,7 @@ export const sendBulkEmails = functions.https.onCall(
                             failureCount++;
                         }
                     } catch (error) {
-                        const reason =
-                            error instanceof Error ? error.message : String(error);
+                        const reason = error instanceof Error ? error.message : String(error);
                         logger.error({
                             message: 'bulk email failed after retries',
                             to: p.email,

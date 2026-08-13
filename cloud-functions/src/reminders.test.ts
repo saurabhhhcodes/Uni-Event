@@ -76,8 +76,7 @@ const { getParticipantContacts } = require('./lib/participants');
 const { processDueReminders } = require('./reminders');
 const adminMock = require('firebase-admin');
 
-const remindersQueryGet = () =>
-    adminMock.firestore().collection('reminders').where().get;
+const remindersQueryGet = () => adminMock.firestore().collection('reminders').where().get;
 
 const eventsDocGet = () => adminMock.firestore().collection('events').doc().get;
 
